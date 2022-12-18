@@ -2,25 +2,43 @@
 // https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
 
 import * as React from "react";
-import { View, Text, SafeAreaView, ScrollView, Dimensions } from "react-native";
-import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
-const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
-const ItemCards = ({ navigation }) => {
-  const cardGap = 16;
+import { View, SafeAreaView, ScrollView, Dimensions } from "react-native";
+import {
+  Avatar,
+  Button,
+  Card,
+  Title,
+  Paragraph,
+  Chip,
+} from "react-native-paper";
 
+import { get, min } from "lodash";
+const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
+const ItemCards = ({ restaurant, data, handleView }) => {
+  const cardGap = 16;
+  console.log("items");
+  console.log(data);
   const cardWidth = (Dimensions.get("window").width - cardGap * 3) / 2;
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
+        <Card>
+          <Card.Cover source={{ uri: get(restaurant, "picUrl", null) }} />
+
+          <Card.Title title={get(restaurant, "name", "")} />
+          <Card.Content>
+            <Paragraph>{get(restaurant, "description", "")}</Paragraph>
+          </Card.Content>
+          <Card.Actions></Card.Actions>
+        </Card>
         <View
           style={{
             flexDirection: "row",
             flexWrap: "wrap",
             justifyContent: "center",
-            paddingTop: 100,
           }}
         >
-          {[1, 2, 4, 5, 6, 6].map((d, index) => {
+          {data.map((items, index) => {
             return (
               <View
                 key={index}
@@ -28,34 +46,34 @@ const ItemCards = ({ navigation }) => {
                   marginTop: cardGap,
                   marginLeft: index % 2 !== 0 ? cardGap : 0,
                   width: cardWidth,
-                  // height: 180,
                   backgroundColor: "white",
                   borderRadius: 16,
                   shadowOpacity: 0.2,
-                  // justifyContent: "center",
                   alignItems: "center",
                 }}
               >
                 <Card>
-                  <Card.Title
-                    title="Card Title"
-                    subtitle="Card Subtitle"
-                    // left={LeftContent}
-                  />
+                  <Card.Title title={get(items, "name", "")} />
+                  <Card.Cover source={{ uri: get(items, "picUrl", null) }} />
                   <Card.Content>
-                    <Title>Card titleeeee</Title>
-                    <Paragraph>Card content</Paragraph>
+                    <Paragraph>
+                      <Chip
+                      // icon="information"
+                      >
+                        {`Rs:${get(items, "price", "")}`}
+                      </Chip>
+                    </Paragraph>
+                    <Paragraph>{get(items, "description", "")}</Paragraph>
                   </Card.Content>
-                  <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
                   <Card.Actions>
                     <Button
                       onPress={() => {
-                        navigation.navigate("LoginScreenn");
+                        handleView(items);
                       }}
                     >
-                      Cancel
+                      View
                     </Button>
-                    <Button>Ok</Button>
+                    <Button>Add</Button>
                   </Card.Actions>
                 </Card>
               </View>

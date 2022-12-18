@@ -4,10 +4,12 @@
 import * as React from "react";
 import { View, Text, SafeAreaView, ScrollView, Dimensions } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
+import { get } from "lodash";
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
-const ResturantCards = ({ navigation }) => {
+const ResturantCards = ({ data, handleSelectedRestaurant }) => {
   const cardGap = 10;
   const cardWidth = (Dimensions.get("window").width - cardGap * 3) / 2;
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
@@ -20,30 +22,21 @@ const ResturantCards = ({ navigation }) => {
             // justifyContent: "space-evenly",
           }}
         >
-          {[1, 2, 3, 4, 5, 6, 7].map((d, index) => {
+          {data.map((res, index) => {
             return (
               <View key={index} style={{ marginTop: 15 }}>
-                <Card>
-                  <Card.Title
-                    title="Card Title"
-                    subtitle="Card Subtitle"
-                    // left={LeftContent}
-                  />
+                <Card
+                  onPress={() => {
+                    handleSelectedRestaurant(res);
+                  }}
+                >
+                  <Card.Cover source={{ uri: get(res, "picUrl", null) }} />
+
+                  <Card.Title title={get(res, "name", "")} />
                   <Card.Content>
-                    <Title>Card titlee</Title>
-                    <Paragraph>Card content</Paragraph>
+                    <Paragraph>{get(res, "description", "")}</Paragraph>
                   </Card.Content>
-                  <Card
-                    onPress={() => {
-                      navigation.navigate("Items");
-                    }}
-                  >
-                    <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
-                  </Card>
-                  <Card.Actions>
-                    <Button>Cancel</Button>
-                    <Button>Ok</Button>
-                  </Card.Actions>
+                  <Card.Actions></Card.Actions>
                 </Card>
               </View>
             );

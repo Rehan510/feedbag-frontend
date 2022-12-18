@@ -18,36 +18,11 @@ import {
 import { theme } from "./src/core/theme";
 import { Provider } from "react-native-paper";
 import config from "./src/config/config";
-// import SyncStorage from "sync-storage";
 const Navigation = () => {
-  // const [isLogin, setIsLogin] = useState(false);
   const { test, isLogin } = useSelector((state) => state.feed);
-  console.log(test, "sdfsfsdfsfdz");
   const Stack = createStackNavigator();
-  const abc = async () => {
-    const data = await axios.post(config.apiUrl + "/api/user/test_url");
-    // console.log(data);
-  };
-  // const userData = async () => {
-  //   try {
-  //     const value = await SyncStorage.get("user");
-  //     if (value !== null) {
-  //       // We have data!!
-  //       setIsLogin(true);
-  //       console.log("login user");
-  //       console.log(value);
-  //     } else {
-  //       setIsLogin(false);
-  //       console.log("nnn");
-  //     }
-  //   } catch (error) {
-  //     // Error retrieving data
-  //   }
-  // };
   useEffect(() => {
-    console.log("login test");
-    // userData();
-    // abc();
+    console.log("i am navigations");
   }, []);
   console.log("login staus", isLogin);
   return (
