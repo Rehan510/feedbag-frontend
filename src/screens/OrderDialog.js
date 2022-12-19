@@ -12,6 +12,7 @@ import {
 } from "react-native-paper";
 import Header from "../components/Header";
 import { get } from "lodash";
+import PlaceOrder from "./PlaceOrder";
 const ItemDialog = ({
   hideDialog,
   showDialog,
@@ -27,11 +28,9 @@ const ItemDialog = ({
         <Dialog visible={show} onDismiss={hideDialog}>
           <Dialog.Content>
             <Card>
-              <Card.Cover source={{ uri: get(data, "picUrl", null) }} />
               <Card.Content>
-                <Title>
-                  <Header>{get(data, "name", "")}</Header>
-                </Title>
+                <PlaceOrder />
+
                 <Paragraph>{get(data, "description", "")}</Paragraph>
                 <Chip icon="plus">{`Rs:${get(data, "price", "")}`}</Chip>
               </Card.Content>

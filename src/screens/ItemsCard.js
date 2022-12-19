@@ -11,10 +11,11 @@ import {
   Paragraph,
   Chip,
 } from "react-native-paper";
+import Header from "../components/Header";
 
-import { get, min } from "lodash";
+import { get } from "lodash";
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
-const ItemCards = ({ restaurant, data, handleView }) => {
+const ItemCards = ({ restaurant, data, handleView, navigation, order }) => {
   const cardGap = 16;
   console.log("items");
   console.log(data);
@@ -25,8 +26,10 @@ const ItemCards = ({ restaurant, data, handleView }) => {
         <Card>
           <Card.Cover source={{ uri: get(restaurant, "picUrl", null) }} />
 
-          <Card.Title title={get(restaurant, "name", "")} />
           <Card.Content>
+            <Title>
+              <Header>{get(restaurant, "name", "")}</Header>
+            </Title>
             <Paragraph>{get(restaurant, "description", "")}</Paragraph>
           </Card.Content>
           <Card.Actions></Card.Actions>
@@ -81,6 +84,16 @@ const ItemCards = ({ restaurant, data, handleView }) => {
           })}
         </View>
       </ScrollView>
+      {order.length > 0 ? (
+        <Button
+          mode="contained"
+          onPress={() => {
+            navigation.navigate("ViewCart");
+          }}
+        >
+          View your cart
+        </Button>
+      ) : null}
     </SafeAreaView>
   );
 };

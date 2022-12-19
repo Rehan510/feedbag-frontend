@@ -5,6 +5,7 @@ import * as React from "react";
 import { View, Text, SafeAreaView, ScrollView, Dimensions } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 import { get } from "lodash";
+import Header from "../components/Header";
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 const ResturantCards = ({ data, handleSelectedRestaurant }) => {
   const cardGap = 10;
@@ -32,8 +33,11 @@ const ResturantCards = ({ data, handleSelectedRestaurant }) => {
                 >
                   <Card.Cover source={{ uri: get(res, "picUrl", null) }} />
 
-                  <Card.Title title={get(res, "name", "")} />
+                  {/* <Card.Title title= /> */}
                   <Card.Content>
+                    <Title>
+                      <Header>{get(res, "name", "")}</Header>
+                    </Title>
                     <Paragraph>{get(res, "description", "")}</Paragraph>
                   </Card.Content>
                   <Card.Actions></Card.Actions>

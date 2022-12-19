@@ -6,12 +6,19 @@ import { View, Text } from "react-native";
 import ResturantCards from "./ResturantCards";
 import { useSelector, useDispatch } from "react-redux";
 import { getRestaurants, getRestaurantWithItems } from "./pagesAction";
-import { setSelectedRestaurant, setRestaurantItems } from "../reducers/feed";
+import {
+  setSelectedRestaurant,
+  setRestaurantItems,
+  setSelectedItem,
+  setOrder,
+} from "../reducers/feed";
 import { get } from "lodash";
 const Home = ({ navigation }) => {
   const { restaurants } = useSelector((state) => state.feed);
   const dispatch = useDispatch();
   const handleSelectedRestaurant = (selectedRestaurant) => {
+    dispatch(setOrder([]));
+    dispatch(setSelectedItem(null));
     dispatch(setRestaurantItems([]));
     dispatch(setSelectedRestaurant(selectedRestaurant));
     dispatch(getRestaurantWithItems(get(selectedRestaurant, "id", null)));

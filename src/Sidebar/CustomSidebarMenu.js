@@ -33,23 +33,23 @@ const CustomSidebarMenu = (props) => {
 
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />
-        <DrawerItem
+        {/* <DrawerItem
           label="Visit Us"
           onPress={() => Linking.openURL("https://aboutreact.com/")}
-        />
+        /> */}
         <DrawerItem
           label="Logout"
           onPress={() => {
             props.navigation.navigate("LoginScreen");
           }}
         />
-        <View style={styles.customItem}>
+        {/* <View style={styles.customItem}>
           <Text>Rate Us</Text>
           <Image
             source={{ uri: BASE_PATH + "star_filled.png" }}
             style={styles.iconStyle}
           />
-        </View>
+        </View> */}
       </DrawerContentScrollView>
       <Text style={{ fontSize: 16, textAlign: "center", color: "grey" }}>
         www.aboutreact.com

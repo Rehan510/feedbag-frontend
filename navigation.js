@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import Home from "./src/Sidebar/Sidebar";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useSelector } from "react-redux";
+import Button from "./src/components/Button";
 import axios from "axios";
 import {
   StartScreen,
@@ -17,9 +18,11 @@ import {
 } from "./src/screens";
 import { theme } from "./src/core/theme";
 import { Provider } from "react-native-paper";
-import config from "./src/config/config";
-const Navigation = () => {
-  const { test, isLogin } = useSelector((state) => state.feed);
+import PlaceOrder from "./src/screens/PlaceOrder";
+import ViewCart from "./src/screens/ViewCart";
+const Navigation = (props) => {
+  const { test, isLogin, order } = useSelector((state) => state.feed);
+
   const Stack = createStackNavigator();
   useEffect(() => {
     console.log("i am navigations");
@@ -37,6 +40,8 @@ const Navigation = () => {
           <>
             <Stack.Screen name="SiderbarHome" component={Home} />
             <Stack.Screen name="LoginScreenn" component={LoginScreen} />
+            <Stack.Screen name="PlaceOrder" component={PlaceOrder} />
+            <Stack.Screen name="ViewCart" component={ViewCart} />
           </>
         ) : (
           <Stack.Screen name="StartScreen" component={StartScreen} />

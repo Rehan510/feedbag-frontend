@@ -9,9 +9,11 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import CustomSidebarMenu from "./CustomSidebarMenu";
 import { Home, Logout, Orders, Profile } from "../pages";
 import Button from "../components/Button";
+import { useSelector } from "react-redux";
 const Drawer = createDrawerNavigator();
 
-function App() {
+function App(props) {
+  const { order } = useSelector((state) => state.feed);
   return (
     <>
       <Drawer.Navigator
@@ -34,13 +36,17 @@ function App() {
           options={{ drawerLabel: "Profile" }}
           component={Profile}
         />
-        <Drawer.Screen
-          name="Orders"
-          options={{ drawerLabel: "Orders" }}
-          component={Orders}
-        />
       </Drawer.Navigator>
-      <Button mode="contained">Login</Button>
+      {order.length > 0 ? (
+        <Button
+          mode="contained"
+          onPress={() => {
+            props.navigation.navigate("ViewCart");
+          }}
+        >
+          View your cart
+        </Button>
+      ) : null}
     </>
   );
 }
