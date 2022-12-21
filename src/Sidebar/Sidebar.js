@@ -36,6 +36,11 @@ function App(props) {
           options={{ drawerLabel: "Profile" }}
           component={Profile}
         />
+        <Drawer.Screen
+          name="Orders"
+          options={{ drawerLabel: "Orders & History" }}
+          component={Orders}
+        />
       </Drawer.Navigator>
       {order.length > 0 ? (
         <Button

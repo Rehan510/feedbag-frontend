@@ -1,36 +1,33 @@
 // Custom Navigation Drawer / Sidebar with Image and Icon in Menu Options
 // https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
 
-import * as React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, View, Text, SafeAreaView } from "react-native";
-
+import UserOrders from "./UserOrders";
+import axios from "axios";
+import config from "../config/config";
 const Orders = ({ navigation }) => {
+  const [preOrders, setPreOrders] = useState([]);
+  const getOrderHistory = useCallback(async () => {
+    try {
+      const resp = await axios.get(`${config.apiUrl}/order/get`);
+      console.log(resp.data);
+      if (!resp.data.error) {
+        setPreOrders(resp.data.data);
+      }
+    } catch (error) {
+      setPreOrders([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    getOrderHistory();
+ 
+  }, []);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, padding: 16 }}>
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 25,
-              textAlign: "center",
-              marginBottom: 16,
-            }}
-          >
-            Orders
-          </Text>
-        </View>
-        {/* <Text style={{ fontSize: 18, textAlign: 'center', color: 'grey' }}>
-          Custom React Navigate Drawer
-        </Text>
-        <Text style={{ fontSize: 16, textAlign: 'center', color: 'grey' }}>
-          www.aboutreact.com
-        </Text> */}
+        <UserOrders preOrders={preOrders} />
       </View>
     </SafeAreaView>
   );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TouchableOpacity, StyleSheet, View } from "react-native";
+import { TouchableOpacity, StyleSheet, View, Alert } from "react-native";
 import { Text } from "react-native-paper";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
@@ -13,7 +13,8 @@ import { passwordValidator } from "../helpers/passwordValidator";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import config from "../config/config";
-import { setIsLogin } from "../reducers/feed";
+import { setIsLogin, setUser } from "../reducers/feed";
+import { get } from "lodash";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
@@ -26,14 +27,19 @@ export default function LoginScreen({ navigation }) {
       password: password.value,
     };
     try {
-      console.log(data);
-
       const response = await axios.post(`${config.apiUrl}/user/login`, data);
-
-      console.log(response.data.data);
-      dispatch(setIsLogin(true));
-      navigation.navigate("SiderbarHome");
+      console.log(response.data);
+      if (!response.data.error) {
+        dispatch(setUser(response.data.data.user));
+        dispatch(setIsLogin(true));
+        navigation.navigate("SiderbarHome");
+      }
+      if (response.data.error) {
+        Alert.alert("your email password is incorrect");
+      }
     } catch (error) {
+      setUser(null);
+      Alert.alert("something went wrong");
       console.log(error);
     }
   };

@@ -10,7 +10,8 @@ export default {
     axios.interceptors.request.use(
       (axiosConfig) => {
         const authToken =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6MSwiZW1haWwiOiJhYmNkMUBnbWFpbC5jb20iLCJjcmVhdGVkQXQiOiIyMDIyLTEyLTE4VDA5OjI3OjMzLjUwNVoifSwiaWF0IjoxNjcxMzU1NjUzfQ.i34xIFAHi0smLPq0YXrHY7vz7LUzJa1Ztuo92UKneLM";
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6NCwiZW1haWwiOiJqaG9uMTFAZ21haWwuY29tIiwiY3JlYXRlZEF0IjoiMjAyMi0xMi0yMFQxNzozOToxNy41NDlaIn0sImlhdCI6MTY3MTU1Nzk1N30.sbAf5q-zK9Mg9jzWLhq7qPfnHbPCAmtZG2dPMcwupcE";
+
         if (authToken) {
           axiosConfig.headers["x-token"] = authToken;
         }

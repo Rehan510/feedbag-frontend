@@ -2,7 +2,7 @@
 // https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
 
 import React, { useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import ResturantCards from "./ResturantCards";
 import { useSelector, useDispatch } from "react-redux";
 import { getRestaurants, getRestaurantWithItems } from "./pagesAction";
@@ -12,6 +12,7 @@ import {
   setSelectedItem,
   setOrder,
 } from "../reducers/feed";
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { get } from "lodash";
 const Home = ({ navigation }) => {
   const { restaurants } = useSelector((state) => state.feed);
@@ -30,12 +31,52 @@ const Home = ({ navigation }) => {
   }, []);
   return (
     <>
-      <ResturantCards
-        data={restaurants}
-        handleSelectedRestaurant={handleSelectedRestaurant}
-      />
+      {restaurants.length > 0 ? (
+        <ResturantCards
+          data={restaurants}
+          handleSelectedRestaurant={handleSelectedRestaurant}
+        />
+      ) : (
+        <View style={styles.middle}>
+          <ActivityIndicator
+            style={styles.middle}
+            animating={true}
+            color={"black"}
+          />
+          <Text style={styles.middle}> Please wait ...</Text>
+        </View>
+      )}
     </>
   );
 };
 
 export default Home;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    // backgroundColor: "#fff",
+    padding: 20,
+    margin: 10,
+  },
+  top: {
+    flex: 0.3,
+    backgroundColor: "grey",
+    borderWidth: 5,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  middle: {
+    flex: 0.3,
+    textAlign: "center",
+    // backgroundColor: "beige",
+    // borderWidth: 5,
+  },
+  bottom: {
+    flex: 0.3,
+    backgroundColor: "pink",
+    borderWidth: 5,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+});

@@ -16,8 +16,9 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-
+import { useSelector } from "react-redux";
 const CustomSidebarMenu = (props) => {
+  const { user } = useSelector((state) => state.feed);
   const BASE_PATH =
     "https://raw.githubusercontent.com/AboutReact/sampleresource/master/";
   const proileImage = "react_logo.png";
@@ -29,7 +30,9 @@ const CustomSidebarMenu = (props) => {
         source={{ uri: "https://pixlr.com/images/index/remove-bg.webp" }}
         style={styles.sideMenuProfileIcon}
       />
-      <Text style={{ marginLeft: 10 }}>Muhammad Rehan</Text>
+      <Text style={{ marginLeft: 10 }}>
+        {user["firstName"] ? user["firstName"] : ""}
+      </Text>
 
       <DrawerContentScrollView {...props}>
         <DrawerItemList {...props} />

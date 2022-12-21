@@ -7,6 +7,7 @@ const defaultStates = {
   restaurantItems: [],
   order: [],
   selectedItem: null,
+  user: null,
 };
 export const feed = createSlice({
   name: "feed",
@@ -33,6 +34,9 @@ export const feed = createSlice({
     setSelectedItem: (state, action) => {
       return { ...state, selectedItem: action.payload };
     },
+    setUser: (state, action) => {
+      return { ...state, user: action.payload };
+    },
   },
 });
 
@@ -44,5 +48,6 @@ export const {
   setSelectedRestaurant,
   setOrder,
   setSelectedItem,
+  setUser,
 } = feed.actions;
 export default feed.reducer;

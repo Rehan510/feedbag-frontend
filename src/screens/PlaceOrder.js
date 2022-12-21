@@ -51,7 +51,7 @@ export default function PlaceOrder({ navigation }) {
         // dispatch(setSelectedItem(null));
         // dispatch(setSelectedRestaurant(null));
         dispatch(setOrder([]));
-        dispatch;
+
         Alert.alert("your order is placed");
         navigation.navigate("SiderbarHome");
       }
@@ -60,7 +60,12 @@ export default function PlaceOrder({ navigation }) {
     }
   };
   const handleOrder = () => {
-    placeOrder();
+    if (phoneNo.value && order.length > 0) {
+      placeOrder();
+    } else {
+      Alert.alert("Please provide your contact no");
+    }
+
     // navigation.reset({
     //   index: 0,
     //   routes: [{ name: "Dashboard" }],
@@ -74,9 +79,12 @@ export default function PlaceOrder({ navigation }) {
       <Header>Place your order</Header>
       <TextInput
         label="Contact No"
+        keyboardType="numeric"
         returnKeyType="next"
         value={phoneNo.value}
-        onChangeText={(text) => setPhoneNo({ value: text, error: "" })}
+        onChangeText={(text) =>
+          text.length < 15 && setPhoneNo({ value: text, error: "" })
+        }
         error={!!phoneNo.error}
         errorText={phoneNo.error}
       />
@@ -85,7 +93,9 @@ export default function PlaceOrder({ navigation }) {
         label="Delivery Address"
         returnKeyType="next"
         value={address.value}
-        onChangeText={(text) => setAddress({ value: text, error: "" })}
+        onChangeText={(text) =>
+          text.length < 30 && setAddress({ value: text, error: "" })
+        }
         error={!!address.error}
         errorText={address.error}
         autoCapitalize="none"
@@ -95,7 +105,9 @@ export default function PlaceOrder({ navigation }) {
         label="Special Note"
         returnKeyType="done"
         value={note.value}
-        onChangeText={(text) => setNote({ value: text, error: "" })}
+        onChangeText={(text) =>
+          text.length < 50 && setNote({ value: text, error: "" })
+        }
         error={!!note.error}
         errorText={note.error}
       />

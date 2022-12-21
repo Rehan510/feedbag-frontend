@@ -34,7 +34,7 @@ export default function RegisterScreen({ navigation }) {
       };
       console.log(data);
       // return;
-      console.log(config.apiUrl)
+      console.log(config.apiUrl);
       const response = await axios.post(`${config.apiUrl}/user/register`, data);
       if (!response.data.error) {
         // console.log(response.data);
@@ -48,7 +48,10 @@ export default function RegisterScreen({ navigation }) {
     const nameError = nameValidator(name.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
-    const confirmPasswordError = passwordValidator(confirmPassword.value);
+    let confirmPasswordError = passwordValidator(confirmPassword.value);
+    if (password.value != confirmPassword.value) {
+      confirmPasswordError = "password not match";
+    }
     if (emailError || passwordError || nameError || confirmPasswordError) {
       setName({ ...name, error: nameError });
       setEmail({ ...email, error: emailError });
@@ -64,6 +67,7 @@ export default function RegisterScreen({ navigation }) {
   };
 
   console.log("value", accountType);
+  const handlePassConf = () => {};
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
