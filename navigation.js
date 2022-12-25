@@ -15,11 +15,11 @@ import {
   ResetPasswordScreen,
   Dashboard,
   Items,
-} from "./src/screens";
+} from "./src/screens/customer";
 import { theme } from "./src/core/theme";
 import { Provider } from "react-native-paper";
-import PlaceOrder from "./src/screens/PlaceOrder";
-import ViewCart from "./src/screens/ViewCart";
+import PlaceOrder from "./src/screens/customer/PlaceOrder";
+import ViewCart from "./src/screens/customer/ViewCart";
 const Navigation = (props) => {
   const { test, isLogin, order } = useSelector((state) => state.feed);
 

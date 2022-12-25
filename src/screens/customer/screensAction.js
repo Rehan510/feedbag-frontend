@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setRestaurants } from "../reducers/feed";
-import config from "../config/config";
+import { setRestaurants } from "../../reducers/feed";
+import config from "../../config/config";
 import axios from "axios";
 import { get } from "lodash";
 

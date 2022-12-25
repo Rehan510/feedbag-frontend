@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Text, RadioButton } from "react-native-paper";
-import Background from "../components/Background";
-import Logo from "../components/Logo";
-import Header from "../components/Header";
-import Button from "../components/Button";
-import TextInput from "../components/TextInput";
-import BackButton from "../components/BackButton";
-import { theme } from "../core/theme";
-import { emailValidator } from "../helpers/emailValidator";
-import { passwordValidator } from "../helpers/passwordValidator";
-import { nameValidator } from "../helpers/nameValidator";
-import config from "../config/config";
+import Background from "../../components/Background";
+import Logo from "../../components/Logo";
+import Header from "../../components/Header";
+import Button from "../../components/Button";
+import TextInput from "../../components/TextInput";
+import BackButton from "../../components/BackButton";
+import { theme } from "../../core/theme";
+import { emailValidator } from "../../helpers/emailValidator";
+import { passwordValidator } from "../../helpers/passwordValidator";
+import { nameValidator } from "../../helpers/nameValidator";
+import config from "../../config/config";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { get } from "lodash";
@@ -19,7 +19,7 @@ import {
   setSelectedItem,
   setSelectedRestaurant,
   setOrder,
-} from "../reducers/feed";
+} from "../../reducers/feed";
 export default function PlaceOrder({ navigation }) {
   const [phoneNo, setPhoneNo] = useState({ value: "", error: "" });
   const [address, setAddress] = useState({ value: "", error: "" });

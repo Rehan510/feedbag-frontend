@@ -19,7 +19,7 @@ import {
   Chip,
   Text,
 } from "react-native-paper";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import moment from "moment";
 import { get } from "lodash";
 import { useSelector } from "react-redux";

@@ -7,7 +7,7 @@ import * as React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 // Import Custom Sidebar
 import CustomSidebarMenu from "./CustomSidebarMenu";
-import { Home, Logout, Orders, Profile } from "../pages";
+import { Home, Logout, Orders, Profile } from "../pages/customer";
 import Button from "../components/Button";
 import { useSelector } from "react-redux";
 const Drawer = createDrawerNavigator();

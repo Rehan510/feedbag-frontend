@@ -11,7 +11,7 @@ import {
   setRestaurantItems,
   setSelectedItem,
   setOrder,
-} from "../reducers/feed";
+} from "../../reducers/feed";
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
 import { get } from "lodash";
 const Home = ({ navigation }) => {

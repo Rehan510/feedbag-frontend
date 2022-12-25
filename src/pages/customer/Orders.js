@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Button, View, Text, SafeAreaView } from "react-native";
 import UserOrders from "./UserOrders";
 import axios from "axios";
-import config from "../config/config";
+import config from "../../config/config";
 const Orders = ({ navigation }) => {
   const [preOrders, setPreOrders] = useState([]);
   const getOrderHistory = useCallback(async () => {

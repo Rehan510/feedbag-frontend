@@ -10,7 +10,7 @@ import {
   Chip,
   Title,
 } from "react-native-paper";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 import { get } from "lodash";
 import PlaceOrder from "./PlaceOrder";
 const ItemDialog = ({

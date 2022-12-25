@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import ItemCards from "./ItemsCard";
-import Background from "../components/Background";
-import BackButton from "../components/BackButton";
-import { setSelectedItem, setOrder } from "../reducers/feed";
+import Background from "../../components/Background";
+import BackButton from "../../components/BackButton";
+import { setSelectedItem, setOrder } from "../../reducers/feed";
 import { useSelector, useDispatch } from "react-redux";
 import ItemDialog from "./ItemDialog";
 export default function Items({ navigation }) {

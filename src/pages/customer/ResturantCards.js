@@ -5,7 +5,7 @@ import * as React from "react";
 import { View, Text, SafeAreaView, ScrollView, Dimensions } from "react-native";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 import { get } from "lodash";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
 const ResturantCards = ({ data, handleSelectedRestaurant }) => {
   const cardGap = 10;

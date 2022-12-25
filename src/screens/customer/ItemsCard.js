@@ -11,7 +11,7 @@ import {
   Paragraph,
   Chip,
 } from "react-native-paper";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 
 import { get } from "lodash";
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
