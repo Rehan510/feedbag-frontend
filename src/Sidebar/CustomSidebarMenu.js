@@ -17,8 +17,22 @@ import {
   DrawerItem,
 } from "@react-navigation/drawer";
 import { useSelector } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const CustomSidebarMenu = (props) => {
   const { user } = useSelector((state) => state.feed);
+  const removeValue = async () => {
+    try {
+      await AsyncStorage.removeItem("userDetail");
+    } catch (e) {
+      // remove error
+    }
+
+    console.log("Done.");
+  };
+  const handleLogout = async () => {
+    await removeValue();
+    props.navigation.navigate("LoginScreen");
+  };
   const BASE_PATH =
     "https://raw.githubusercontent.com/AboutReact/sampleresource/master/";
   const proileImage = "react_logo.png";
@@ -43,7 +57,7 @@ const CustomSidebarMenu = (props) => {
         <DrawerItem
           label="Logout"
           onPress={() => {
-            props.navigation.navigate("LoginScreen");
+            handleLogout();
           }}
         />
         {/* <View style={styles.customItem}>

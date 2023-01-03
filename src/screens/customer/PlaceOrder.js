@@ -80,6 +80,7 @@ export default function PlaceOrder({ navigation }) {
       <TextInput
         label="Contact No"
         keyboardType="numeric"
+        
         returnKeyType="next"
         value={phoneNo.value}
         onChangeText={(text) =>

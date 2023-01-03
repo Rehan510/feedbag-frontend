@@ -1,27 +1,38 @@
 import axios from "axios";
 import { get } from "lodash";
 import config from "../config/config";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default {
   initalise: () => {
     axios.defaults.baseURL = config.apiUrl;
 
     // Request Interceptor. All Request pass from here
-    axios.interceptors.request.use(
-      (axiosConfig) => {
-        const authToken =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJJZCI6NCwiZW1haWwiOiJqaG9uMTFAZ21haWwuY29tIiwiY3JlYXRlZEF0IjoiMjAyMi0xMi0yMFQxNzozOToxNy41NDlaIn0sImlhdCI6MTY3MTU1Nzk1N30.sbAf5q-zK9Mg9jzWLhq7qPfnHbPCAmtZG2dPMcwupcE";
 
-        if (authToken) {
-          axiosConfig.headers["x-token"] = authToken;
+    const getData = async () => {
+      try {
+        let jsonValue = await AsyncStorage.getItem("userDetail");
+
+        if (jsonValue) {
+          axios.interceptors.request.use(
+            (axiosConfig) => {
+              const authToken = JSON.parse(jsonValue).token;
+
+              if (authToken) {
+                axiosConfig.headers["x-token"] = authToken;
+              }
+              axiosConfig.headers["Content-Type"] = "application/json";
+              return axiosConfig;
+            },
+            (error) => {
+              Promise.reject(error);
+            }
+          );
         }
-        axiosConfig.headers["Content-Type"] = "application/json";
-        return axiosConfig;
-      },
-      (error) => {
-        Promise.reject(error);
+      } catch (e) {
+        // error reading value
       }
-    );
+    };
+    getData();
 
     /*
 				Response Interceptor

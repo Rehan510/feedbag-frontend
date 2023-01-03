@@ -20,6 +20,8 @@ import { theme } from "./src/core/theme";
 import { Provider } from "react-native-paper";
 import PlaceOrder from "./src/screens/customer/PlaceOrder";
 import ViewCart from "./src/screens/customer/ViewCart";
+import AddItem from "./src/screens/restaurant/AddItem";
+
 const Navigation = (props) => {
   const { test, isLogin, order } = useSelector((state) => state.feed);
 
@@ -28,6 +30,7 @@ const Navigation = (props) => {
     console.log("i am navigations");
   }, []);
   console.log("login staus", isLogin);
+
   return (
     <Provider theme={theme}>
       <Stack.Navigator
@@ -41,6 +44,7 @@ const Navigation = (props) => {
             <Stack.Screen name="SiderbarHome" component={Home} />
             <Stack.Screen name="LoginScreenn" component={LoginScreen} />
             <Stack.Screen name="PlaceOrder" component={PlaceOrder} />
+            <Stack.Screen name="AddItem" component={AddItem} />
             <Stack.Screen name="ViewCart" component={ViewCart} />
           </>
         ) : (

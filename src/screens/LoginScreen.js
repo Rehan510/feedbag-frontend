@@ -15,12 +15,20 @@ import { useDispatch } from "react-redux";
 import config from "../config/config";
 import { setIsLogin, setUser } from "../reducers/feed";
 import { get } from "lodash";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const dispatch = useDispatch();
-
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem("userDetail", jsonValue);
+    } catch (e) {
+      console.log(e);
+      // saving error
+    }
+  };
   const login = async () => {
     const data = {
       email: email.value,
@@ -33,6 +41,7 @@ export default function LoginScreen({ navigation }) {
         dispatch(setUser(response.data.data.user));
         dispatch(setIsLogin(true));
         navigation.navigate("SiderbarHome");
+        storeData(response.data.data);
       }
       if (response.data.error) {
         Alert.alert("your email password is incorrect");

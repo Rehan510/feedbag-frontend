@@ -15,7 +15,13 @@ import Header from "../../components/Header";
 
 import { get } from "lodash";
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
-const ItemCards = ({ restaurant, data, handleView, navigation, order }) => {
+const ItemCards = ({
+  restaurant,
+  data,
+  handleView,
+  navigation,
+  deleteItem,
+}) => {
   const cardGap = 16;
   console.log("items");
   console.log(data);
@@ -55,7 +61,7 @@ const ItemCards = ({ restaurant, data, handleView, navigation, order }) => {
                   alignItems: "center",
                 }}
               >
-                <Card>
+                <Card style={{ minWidth: cardWidth }}>
                   <Card.Title title={get(items, "name", "")} />
                   <Card.Cover source={{ uri: get(items, "picUrl", null) }} />
                   <Card.Content>
@@ -71,18 +77,18 @@ const ItemCards = ({ restaurant, data, handleView, navigation, order }) => {
                   <Card.Actions>
                     <Button
                       onPress={() => {
-                        handleView(items, true);
+                        deleteItem(items.id);
                       }}
                     >
-                      View
+                      Delete
                     </Button>
-                    <Button
+                    {/* <Button
                       onPress={() => {
                         handleView(items, false);
                       }}
                     >
-                      Add
-                    </Button>
+                      Edit
+                    </Button> */}
                   </Card.Actions>
                 </Card>
               </View>
@@ -90,16 +96,6 @@ const ItemCards = ({ restaurant, data, handleView, navigation, order }) => {
           })}
         </View>
       </ScrollView>
-      {order.length > 0 ? (
-        <Button
-          mode="contained"
-          onPress={() => {
-            navigation.navigate("ViewCart");
-          }}
-        >
-          View your cart
-        </Button>
-      ) : null}
     </SafeAreaView>
   );
 };

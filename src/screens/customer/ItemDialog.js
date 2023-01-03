@@ -20,6 +20,7 @@ const ItemDialog = ({
   total,
   addItem,
   removeItem,
+  isView,
 }) => {
   return (
     <View>
@@ -36,29 +37,38 @@ const ItemDialog = ({
                 <Chip icon="plus">{`Rs:${get(data, "price", "")}`}</Chip>
               </Card.Content>
               <Card.Actions>
-                <Button
-                  onPress={() => {
-                    removeItem(data);
-                  }}
-                  icon="minus"
-                  mode="contained"
-                ></Button>
-                <Button mode="outlined">{total}</Button>
-                <Button
-                  onPress={() => {
-                    addItem(data);
-                  }}
-                  icon="plus"
-                  mode="contained"
-                ></Button>
+                {!isView && (
+                  <>
+                    <Button
+                      onPress={() => {
+                        removeItem(data);
+                      }}
+                      icon="minus"
+                      mode="contained"
+                    ></Button>
+                    <Button mode="outlined">{total}</Button>
+                    <Button
+                      onPress={() => {
+                        addItem(data);
+                      }}
+                      icon="plus"
+                      mode="contained"
+                    ></Button>
+                  </>
+                )}
               </Card.Actions>
             </Card>
           </Dialog.Content>
           <Dialog.Actions>
-            <Chip mode="outlined">
-              {`Total Rs:${total * get(data, "price", "")}`}
-            </Chip>
-            <Button onPress={hideDialog}>Add to cart</Button>
+            {!isView && (
+              <>
+                <Chip mode="outlined">
+                  {`Total Rs:${total * get(data, "price", "")}`}
+                </Chip>
+                <Button onPress={hideDialog}>Add to cart</Button>
+              </>
+            )}
+
             {/* <Button onPress={hideDialog} icon="plus" mode="contained"></Button> */}
           </Dialog.Actions>
         </Dialog>

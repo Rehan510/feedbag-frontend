@@ -7,13 +7,53 @@ import * as React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 // Import Custom Sidebar
 import CustomSidebarMenu from "./CustomSidebarMenu";
-import { Home, Logout, Orders, Profile } from "../pages/customer";
+import { Home, Orders, Profile } from "../pages/customer";
+import { RestaurantHomePage } from "../pages/restaurant";
 import Button from "../components/Button";
 import { useSelector } from "react-redux";
+import { Restaurant } from "../pages/restaurant";
 const Drawer = createDrawerNavigator();
 
 function App(props) {
-  const { order } = useSelector((state) => state.feed);
+  const restaurant = [
+    {
+      name: "Home",
+      label: "Home",
+      comment: RestaurantHomePage,
+    },
+    {
+      name: "Profile",
+      label: "Profile",
+      comment: Profile,
+    },
+    {
+      name: "Restaurant",
+      label: "Restaurant",
+      comment: Restaurant,
+    },
+  ];
+  const customer = [
+    {
+      name: "Home",
+      label: "Home",
+      comment: Home,
+    },
+    {
+      name: "Profile",
+      label: "Profile",
+      comment: Profile,
+    },
+    {
+      name: "Orders",
+      label: "Orders & History",
+      comment: Orders,
+    },
+  ];
+
+  const { order, user } = useSelector((state) => state.feed);
+  console.log("i am user");
+  console.log(user);
+  const data = user.accountType === "restaurant" ? restaurant : customer;
   return (
     <>
       <Drawer.Navigator
@@ -26,21 +66,16 @@ function App(props) {
         }}
         drawerContent={(props) => <CustomSidebarMenu {...props} />}
       >
-        <Drawer.Screen
-          name="Home"
-          options={{ drawerLabel: "Home" }}
-          component={Home}
-        />
-        <Drawer.Screen
-          name="Profile"
-          options={{ drawerLabel: "Profile" }}
-          component={Profile}
-        />
-        <Drawer.Screen
-          name="Orders"
-          options={{ drawerLabel: "Orders & History" }}
-          component={Orders}
-        />
+        {data.map((d, index) => {
+          return (
+            <Drawer.Screen
+              key={`scr${index}`}
+              name={d.name}
+              options={{ drawerLabel: d.label }}
+              component={d.comment}
+            />
+          );
+        })}
       </Drawer.Navigator>
       {order.length > 0 ? (
         <Button

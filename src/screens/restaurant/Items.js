@@ -4,7 +4,7 @@ import Background from "../../components/Background";
 import BackButton from "../../components/BackButton";
 import { setSelectedItem, setOrder } from "../../reducers/feed";
 import { useSelector, useDispatch } from "react-redux";
-import ItemDialog from "./ItemDialog";
+// import ItemDialog from "./ItemDialog";
 export default function Items({ navigation }) {
   const [show, setShow] = React.useState(false);
   const [isView, setIsView] = React.useState(false);
@@ -44,7 +44,7 @@ export default function Items({ navigation }) {
   return (
     <>
       {/* <BackButton goBack={navigation.goBack} /> */}
-      <ItemDialog
+      {/* <ItemDialog
         isView={isView}
         show={show}
         hideDialog={hideDialog}
@@ -54,7 +54,7 @@ export default function Items({ navigation }) {
         total={no}
         addItem={addItem}
         removeItem={removeItem}
-      />
+      /> */}
       <ItemCards
         restaurant={selectedRestaurant}
         data={restaurantItems}
