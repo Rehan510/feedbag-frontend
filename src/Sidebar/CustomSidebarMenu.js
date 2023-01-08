@@ -21,6 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useAsyncStorage } from "@react-native-async-storage/async-storage";
 import { resetAll, setIsLogin } from "../reducers/feed";
 import { resetAllRestaurant } from "../reducers/restaurant";
+// import Img from "../assets/logo.png";
 const CustomSidebarMenu = (props) => {
   const { user } = useSelector((state) => state.feed);
   const { getItem, setItem, removeItem } = useAsyncStorage("@userDetail");
@@ -69,7 +70,7 @@ const CustomSidebarMenu = (props) => {
     <SafeAreaView style={{ flex: 1, marginTop: 50 }}>
       {/*Top Large Image */}
       <Image
-        source={{ uri: "https://pixlr.com/images/index/remove-bg.webp" }}
+        source={require("../assets/logo.png")}
         style={styles.sideMenuProfileIcon}
       />
       <Text style={{ marginLeft: 10 }}>
