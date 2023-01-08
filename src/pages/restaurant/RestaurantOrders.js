@@ -28,7 +28,7 @@ const ViewCart = ({ navigation, preOrders }) => {
   const { order } = useSelector((state) => state.feed);
   const cardGap = 16;
 
-  
+
 
   const getTotal = (items) => {
     let total = 0;
@@ -62,7 +62,7 @@ const ViewCart = ({ navigation, preOrders }) => {
                   style={{
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    paddingTop:20
+                    paddingTop: 20,
                   }}
                 >
                   <Text>{moment(dat.createdAt).format("MMM DD, HH:mm")}</Text>

@@ -13,6 +13,9 @@ export const feed = createSlice({
   name: "feed",
   initialState: defaultStates,
   reducers: {
+    resetAll: () => {
+      return defaultStates;
+    },
     setTest: (state, action) => {
       return { ...state, test: action.test };
     },
@@ -49,5 +52,6 @@ export const {
   setOrder,
   setSelectedItem,
   setUser,
+  resetAll,
 } = feed.actions;
 export default feed.reducer;

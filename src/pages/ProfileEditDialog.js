@@ -35,13 +35,14 @@ const ProfileEditDialog = ({
                 <Title>{`Update ${data["label"]}`}</Title>
                 <TextInput
                   label={data["label"]}
-                  returnKeyType="next"
+                  // returnKeyType="next"
                   value={data["value"]}
                   onChangeText={(text) => {
                     handleInput(text);
                   }}
                   error={""}
                   errorText={""}
+                  keyboardType={get(data, "numeric", false) ? "numeric" : null}
                 />
               </Card.Content>
               <Card.Actions>

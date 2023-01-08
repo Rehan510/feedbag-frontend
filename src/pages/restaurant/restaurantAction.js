@@ -8,15 +8,13 @@ export const getUserRestaurantWithItems = () => {
   return async (dispatch, getState) => {
     try {
       const response = await axios.get(`${config.apiUrl}/restaurant/get/owner`);
-      let restaurantsData = get(response, "data.data", []);
-      console.log("meeeee",restaurantsData)
+      let restaurantsData = get(response, "data.data", {});
+     
       if (restaurantsData) {
         dispatch(setUserRestaurant(restaurantsData));
       } else {
         dispatch(setUserRestaurant(null));
       }
-
-      // console.log(response.data);
     } catch (error) {
       dispatch(setUserRestaurant(null));
 

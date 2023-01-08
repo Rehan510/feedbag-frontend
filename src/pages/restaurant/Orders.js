@@ -3,15 +3,17 @@
 
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, View, Text, SafeAreaView } from "react-native";
-import UserOrders from "./UserOrders";
+import UserOrders from "./RestaurantOrders";
 import axios from "axios";
 import config from "../../config/config";
 const Orders = ({ navigation }) => {
   const [preOrders, setPreOrders] = useState([]);
   const getOrderHistory = useCallback(async () => {
     try {
-      const resp = await axios.get(`${config.apiUrl}/order/get`);
-   
+      const resp = await axios.get(
+        `${config.apiUrl}/order/get/byRestaurant?restaurantId=${1}`
+      );
+      console.log(resp.data);
       if (!resp.data.error) {
         setPreOrders(resp.data.data);
       }
@@ -22,10 +24,10 @@ const Orders = ({ navigation }) => {
 
   useEffect(() => {
     getOrderHistory();
- 
   }, []);
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      {/* <Text>Rehan orders</Text> */}
       <View style={{ flex: 1, padding: 16 }}>
         <UserOrders preOrders={preOrders} />
       </View>

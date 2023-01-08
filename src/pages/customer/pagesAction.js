@@ -9,7 +9,9 @@ export const getRestaurants = () => {
     try {
       const response = await axios.get(`${config.apiUrl}/restaurant/getAll`);
       let restaurantsData = get(response, "data.data", []);
-      dispatch(setRestaurants(restaurantsData));
+      if (restaurantsData) {
+        dispatch(setRestaurants(restaurantsData));
+      }
     } catch (error) {
       dispatch(setRestaurants([]));
 
@@ -29,7 +31,7 @@ export const getRestaurantWithItems = (restaurantId) => {
       );
 
       let restaurantsItemsData = get(response, "data.data", []);
-      console.log(get(restaurantsItemsData, "Items", []));
+
       const restaurantItems = get(restaurantsItemsData, "Items", []);
       dispatch(setRestaurantItems(restaurantItems));
     } catch (error) {

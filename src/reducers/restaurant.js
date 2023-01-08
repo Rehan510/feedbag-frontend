@@ -10,8 +10,11 @@ export const restaurant = createSlice({
     setUserRestaurant: (state, action) => {
       return { ...state, userRestaurant: action.payload };
     },
+    resetAllRestaurant: () => {
+      return defaultStates;
+    },
   },
 });
 
-export const { setUserRestaurant } = restaurant.actions;
+export const { setUserRestaurant, resetAllRestaurant } = restaurant.actions;
 export default restaurant.reducer;

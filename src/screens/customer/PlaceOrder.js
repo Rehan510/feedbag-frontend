@@ -26,8 +26,7 @@ export default function PlaceOrder({ navigation }) {
   const [note, setNote] = useState({ value: "", error: "" });
   const { order, selectedRestaurant } = useSelector((state) => state.feed);
   const dispatch = useDispatch();
-  console.log("ress");
-  console.log(selectedRestaurant);
+  
   const placeOrder = async () => {
     try {
       if (!selectedRestaurant.id) {
@@ -42,14 +41,15 @@ export default function PlaceOrder({ navigation }) {
         restaurantId: get(selectedRestaurant, "id", null),
         orderedItems: order,
       };
-      console.log(data);
-      // return;
-      console.log(config.apiUrl);
+     
+      
+
       const response = await axios.post(`${config.apiUrl}/order/add`, data);
       if (!response.data.error) {
         // console.log(response.data);
         // dispatch(setSelectedItem(null));
         // dispatch(setSelectedRestaurant(null));
+     
         dispatch(setOrder([]));
 
         Alert.alert("your order is placed");

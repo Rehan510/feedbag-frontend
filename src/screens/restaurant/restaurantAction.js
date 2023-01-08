@@ -10,7 +10,7 @@ export const getUserRestaurantWithItems = (restaurantId) => {
       const response = await axios.get(`${config.apiUrl}/restaurant/get/owner`);
       let restaurantsData = get(response, "data.data", []);
       dispatch(setUserRestaurant(restaurantsData));
-      console.log(response.data);
+    
     } catch (error) {
       dispatch(setUserRestaurant(null));
 

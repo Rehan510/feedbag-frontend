@@ -21,7 +21,7 @@ const ViewCart = ({ navigation }) => {
   const cardGap = 16;
   let totalPrice = 0;
   let totalQuantity = 0;
-  console.log("view cars");
+
   const optionsPerPage = [2, 3, 4];
   const cardWidth = (Dimensions.get("window").width - cardGap * 3) / 2;
 
@@ -29,8 +29,7 @@ const ViewCart = ({ navigation }) => {
     totalPrice = totalPrice + data.price;
     totalQuantity = totalQuantity + 1;
   });
-  // console.log(order)
-  //   console.log(order.length, table.length,"table==================");
+  
   return (
     <SafeAreaView style={{ flex: 1, paddingTop: 30 }}>
       {/* <ScrollView>

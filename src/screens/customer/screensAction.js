@@ -12,7 +12,7 @@ export const getRestaurantWithItems = (restaurantId) => {
       );
       let restaurantsData = get(response, "data.data", []);
       dispatch(setRestaurants(restaurantsData));
-      console.log(response.data);
+  
     } catch (error) {
       dispatch(setRestaurants([]));
 

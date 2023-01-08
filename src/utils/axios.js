@@ -7,16 +7,29 @@ export default {
     axios.defaults.baseURL = config.apiUrl;
 
     // Request Interceptor. All Request pass from here
-
+    console.log("some one hit");
     const getData = async () => {
       try {
-        let jsonValue = await AsyncStorage.getItem("userDetail");
-
+        let jsonValue = await AsyncStorage.getItem("@userDetail");
+        console.log(`*****************************************************
+                     *
+                     *
+                     * 
+                     *           token detail
+                     *            ${jsonValue}
+                     * 
+                     * 
+                     * 
+                     * 
+                     * *****************************************************
+        `);
+       
         if (jsonValue) {
           axios.interceptors.request.use(
             (axiosConfig) => {
+             
+           
               const authToken = JSON.parse(jsonValue).token;
-
               if (authToken) {
                 axiosConfig.headers["x-token"] = authToken;
               }
@@ -29,6 +42,7 @@ export default {
           );
         }
       } catch (e) {
+        console.log(e);
         // error reading value
       }
     };

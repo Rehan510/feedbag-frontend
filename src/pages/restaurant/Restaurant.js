@@ -76,8 +76,8 @@ export default function RegisterScreen({ navigation }) {
       formData.append("address", address.value);
       formData.append("phoneNo", phone.value);
       formData.append("description", description.value);
-      console.log(formData);
-      let jsonValue = await AsyncStorage.getItem("userDetail");
+
+      let jsonValue = await AsyncStorage.getItem("@userDetail");
       const token = JSON.parse(jsonValue).token;
       let resp = await fetch(`${config.apiUrl}/restaurant/register`, {
         method: "post",
@@ -96,16 +96,18 @@ export default function RegisterScreen({ navigation }) {
       //     },
       //     transformRequest: (d) => formData,
       //   });
-      console.log("ress");
-      console.log(resp);
-      Alert.alert("Your item restaurant created");
-      dispatch(getUserRestaurantWithItems());
+
+      if (resp) {
+        Alert.alert("Your item restaurant created");
+
+        dispatch(getUserRestaurantWithItems());
+      }
+
       setName({ value: "", error: "" });
       setDescription({ value: "", error: "" });
       setImage(null);
       setPhone({ value: "", error: "" });
     } catch (error) {
-      console.log("rrro");
       Alert.alert("SomeThing went wrong");
       console.log(error);
     }

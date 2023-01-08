@@ -32,9 +32,7 @@ export default function RegisterScreen({ navigation }) {
         email: email.value,
         password: password.value,
       };
-      console.log(data);
-      // return;
-      console.log(config.apiUrl);
+
       const response = await axios.post(`${config.apiUrl}/user/register`, data);
       if (!response.data.error) {
         // console.log(response.data);
@@ -66,7 +64,6 @@ export default function RegisterScreen({ navigation }) {
     // });
   };
 
-  console.log("value", accountType);
   const handlePassConf = () => {};
   return (
     <Background>

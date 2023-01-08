@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { TouchableOpacity, StyleSheet, View, Alert } from "react-native";
 import { Text } from "react-native-paper";
 import Background from "../components/Background";
@@ -13,21 +13,33 @@ import { passwordValidator } from "../helpers/passwordValidator";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import config from "../config/config";
-import { setIsLogin, setUser } from "../reducers/feed";
+import { setIsLogin, setUser, resetAll } from "../reducers/feed";
+import { resetAllRestaurant } from "../reducers/restaurant";
 import { get } from "lodash";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AxiosInterceptor from "../utils/axios";
+
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const dispatch = useDispatch();
+
   const storeData = async (value) => {
+    let status = false;
+    dispatch(resetAll());
+    dispatch(resetAllRestaurant());
     try {
       const jsonValue = JSON.stringify(value);
-      await AsyncStorage.setItem("userDetail", jsonValue);
+
+      await AsyncStorage.setItem("@userDetail", jsonValue);
+      // AxiosInterceptor.initalise();
+      status = true;
     } catch (e) {
       console.log(e);
       // saving error
+      status = true;
     }
+    return status;
   };
   const login = async () => {
     const data = {
@@ -36,12 +48,14 @@ export default function LoginScreen({ navigation }) {
     };
     try {
       const response = await axios.post(`${config.apiUrl}/user/login`, data);
-      console.log(response.data);
+
       if (!response.data.error) {
-        dispatch(setUser(response.data.data.user));
-        dispatch(setIsLogin(true));
-        navigation.navigate("SiderbarHome");
-        storeData(response.data.data);
+        let status = await storeData(response.data.data);
+        if (status) {
+          dispatch(setUser(response.data.data.user));
+          dispatch(setIsLogin(true));
+          navigation.navigate("SiderbarHome");
+        }
       }
       if (response.data.error) {
         Alert.alert("your email password is incorrect");

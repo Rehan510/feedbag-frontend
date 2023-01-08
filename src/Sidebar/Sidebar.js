@@ -7,11 +7,17 @@ import * as React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 // Import Custom Sidebar
 import CustomSidebarMenu from "./CustomSidebarMenu";
+import { Alert } from "react-native";
 import { Home, Orders, Profile } from "../pages/customer";
 import { RestaurantHomePage } from "../pages/restaurant";
 import Button from "../components/Button";
 import { useSelector } from "react-redux";
-import { Restaurant } from "../pages/restaurant";
+import {
+  Restaurant,
+  RestaurantProfile,
+  RestaurantOrders,
+} from "../pages/restaurant";
+import { get } from "lodash";
 const Drawer = createDrawerNavigator();
 
 function App(props) {
@@ -29,7 +35,12 @@ function App(props) {
     {
       name: "Restaurant",
       label: "Restaurant",
-      comment: Restaurant,
+      comment: RestaurantProfile,
+    },
+    {
+      name: "Orders",
+      label: "Orders & History",
+      comment: RestaurantOrders,
     },
   ];
   const customer = [
@@ -51,8 +62,6 @@ function App(props) {
   ];
 
   const { order, user } = useSelector((state) => state.feed);
-  console.log("i am user");
-  console.log(user);
   const data = user.accountType === "restaurant" ? restaurant : customer;
   return (
     <>

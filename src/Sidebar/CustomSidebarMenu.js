@@ -1,7 +1,7 @@
 // Custom Navigation Drawer / Sidebar with Image and Icon in Menu Options
 // https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
 
-import React from "react";
+import React, { useCallback } from "react";
 import {
   SafeAreaView,
   View,
@@ -16,22 +16,50 @@ import {
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { useSelector } from "react-redux";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useSelector, useDispatch } from "react-redux";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAsyncStorage } from "@react-native-async-storage/async-storage";
+import { resetAll, setIsLogin } from "../reducers/feed";
+import { resetAllRestaurant } from "../reducers/restaurant";
 const CustomSidebarMenu = (props) => {
   const { user } = useSelector((state) => state.feed);
+  const { getItem, setItem, removeItem } = useAsyncStorage("@userDetail");
+
+  const dispatch = useDispatch();
   const removeValue = async () => {
     try {
-      await AsyncStorage.removeItem("userDetail");
+      console.log("this is removed");
+      await removeItem();
     } catch (e) {
+      console.log("this is remove");
+      console.log(e);
       // remove error
     }
 
     console.log("Done.");
   };
+  const clearAll = useCallback(async () => {
+    try {
+      // await AsyncStorage.clear();
+    } catch (e) {
+      console.log(e);
+      // clear error
+    }
+
+    console.log("Done.");
+  }, []);
   const handleLogout = async () => {
-    await removeValue();
-    props.navigation.navigate("LoginScreen");
+    const d = await removeValue();
+    const a = await clearAll();
+    let jsonValue = await getItem();
+    const authToken = JSON.parse(jsonValue);
+    console.log("token");
+    console.log(authToken);
+    // dispatch(resetAll());
+    // dispatch(resetAllRestaurant());
+    dispatch(setIsLogin(false));
+
+    // props.navigation.navigate("LoginScreen");
   };
   const BASE_PATH =
     "https://raw.githubusercontent.com/AboutReact/sampleresource/master/";

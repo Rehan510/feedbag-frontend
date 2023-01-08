@@ -15,14 +15,12 @@ import Restaurant from "./Restaurant";
 
 export default function Items({ navigation }) {
   const { userRestaurant } = useSelector((state) => state.restaurant);
-  console.log("user test reshdahdh");
-  console.log(userRestaurant);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUserRestaurantWithItems());
   }, []);
   const deleteItem = async (deleteItemId) => {
-    console.log(deleteItemId);
     try {
       const resp = await axios.delete(
         `${config.apiUrl}/item/delete?itemId=${deleteItemId}`
@@ -32,7 +30,6 @@ export default function Items({ navigation }) {
         Alert.alert(data.message);
         dispatch(getUserRestaurantWithItems());
       }
-      console.log(resp.data);
     } catch (error) {
       Alert.alert("something went wrong");
     }

@@ -2,51 +2,54 @@
 // https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
 
 import React, { useState } from "react";
-import { View, Text, SafeAreaView } from "react-native";
+import { View, Text, SafeAreaView ,ScrollView} from "react-native";
 import { Button, Paragraph, Card, Chip, Title } from "react-native-paper";
-import Header from "../components/Header";
-import ProfileEditDialog from "./ProfileEditDialog";
-import config from "../config/config";
+import Header from "../../components/Header";
+import ProfileEditDialog from "../ProfileEditDialog";
+import config from "../../config/config";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import { getUserRestaurantWithItems } from "./restaurantAction";
 import { get } from "lodash";
-import { setUser } from "../reducers/feed";
 const Profile = ({ navigation }) => {
   const [show, setShow] = useState(false);
   const [data, setData] = useState({ textField: "", value: "", label: "" });
-  const { user } = useSelector((state) => state.feed);
+  const { userRestaurant } = useSelector((state) => state.restaurant);
   const dispatch = useDispatch();
 
   const style = { marginTop: 20 };
-  const getUser = async () => {
-    try {
-      const response = await axios.get(`${config.apiUrl}/users/me`);
-      dispatch(setUser(response.data.data.user));
-    } catch (error) {}
-  };
   const updateProfile = async (userData) => {
-    let payload = {};
+    let payload = {
+      restaurantId: userRestaurant.id,
+      name: userRestaurant.name,
+      description: userRestaurant.description,
+      address: userRestaurant.address,
+      description: userRestaurant.description,
+      phoneNo: userRestaurant.phoneNo,
+    };
     if (userData["textField"] === "name") {
-      payload = { firstName: userData["value"] };
-    }
-    if (userData["textField"] === "email") {
-      payload = { email: userData["value"] };
-    }
-    if (userData["textField"] === "contactNo") {
-      payload = { contactNo: userData["value"] };
+      payload.name = userData["value"];
     }
     if (userData["textField"] === "address") {
-      payload = { address: userData["value"] };
+      payload.address = userData["value"];
+    }
+    if (userData["textField"] === "phoneNo") {
+      payload.phoneNo = userData["value"];
+    }
+    if (userData["textField"] === "description") {
+      payload.description = userData["value"];
     }
 
+   
+   
     try {
       const response = await axios.put(
-        `${config.apiUrl}/users/updateProfile`,
+        `${config.apiUrl}/restaurant/update`,
         payload
       );
       setData({ textFied: "", value: "", label: "" });
       setShow(false);
-      await getUser();
+      dispatch(getUserRestaurantWithItems());
     } catch (error) {
       console.log(error);
     }
@@ -60,11 +63,13 @@ const Profile = ({ navigation }) => {
   };
 
   const handleInput = (text) => {
+   
     setData({ ...data, value: text });
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+         <ScrollView>
       <View style={{ flex: 1, padding: 16 }}>
         <ProfileEditDialog
           show={show}
@@ -80,11 +85,36 @@ const Profile = ({ navigation }) => {
             // justifyContent: "center",
           }}
         >
+          <Card>
+            <Card.Cover source={{ uri: get(userRestaurant, "picUrl", null) }} />
+
+            <Card.Content>
+              <Title>
+                {/* <Header>{get(userRestaurant, "name", "")}</Header> */}
+              </Title>
+              {/* <Paragraph>{get(userRestaurant, "description", "")}</Paragraph> */}
+            </Card.Content>
+            <Card.Actions>
+              <Chip
+                mode="outlined"
+                icon="pencil"
+                onPress={() => {
+                  handleEdit({
+                    textField: "name",
+                    value: get(userRestaurant, "name", ""),
+                    label: "Name",
+                  });
+                }}
+              >
+                Edit
+              </Chip>
+            </Card.Actions>
+          </Card>
           <Card style={style}>
             <Card.Content>
               <Paragraph>Name</Paragraph>
               <Chip icon="human" mode="outlined">
-                {get(user, "firstName", "")}
+                {get(userRestaurant, "name", "")}
               </Chip>
             </Card.Content>
             <Card.Actions>
@@ -94,7 +124,7 @@ const Profile = ({ navigation }) => {
                 onPress={() => {
                   handleEdit({
                     textField: "name",
-                    value: get(user, "firstName", ""),
+                    value: get(userRestaurant, "name", ""),
                     label: "Name",
                   });
                 }}
@@ -113,9 +143,9 @@ const Profile = ({ navigation }) => {
           </Card>
           <Card style={style}>
             <Card.Content>
-              <Paragraph>Email</Paragraph>
-              <Chip icon="email" mode="outlined">
-                {get(user, "email", "")}
+              <Paragraph>Address</Paragraph>
+              <Chip icon="home" mode="outlined">
+                {get(userRestaurant, "address", "")}
               </Chip>
             </Card.Content>
             <Card.Actions>
@@ -124,9 +154,9 @@ const Profile = ({ navigation }) => {
                 icon="pencil"
                 onPress={() => {
                   handleEdit({
-                    textField: "email",
-                    value: get(user, "email", ""),
-                    label: "Email",
+                    textField: "address",
+                    value: get(userRestaurant, "address", ""),
+                    label: "Address",
                   });
                 }}
               >
@@ -138,8 +168,8 @@ const Profile = ({ navigation }) => {
             <Card.Content>
               <Paragraph>Contact No</Paragraph>
               <Chip icon="phone" mode="outlined">
-                {get(user, "contactNo", "")
-                  ? get(user, "contactNo", "")
+                {get(userRestaurant, "phoneNo", "")
+                  ? get(userRestaurant, "phoneNo", "")
                   : "Please add your Contact No"}
               </Chip>
             </Card.Content>
@@ -149,9 +179,10 @@ const Profile = ({ navigation }) => {
                 icon="pencil"
                 onPress={() => {
                   handleEdit({
-                    textField: "contactNo",
-                    value: get(user, "contactNo", ""),
+                    textField: "phoneNo",
+                    value: `${get(userRestaurant, "phoneNo", "")}`,
                     label: "Contact No",
+                    numeric: true,
                   });
                 }}
               >
@@ -162,11 +193,11 @@ const Profile = ({ navigation }) => {
 
           <Card style={style}>
             <Card.Content>
-              <Paragraph> Delivery Address</Paragraph>
-              <Chip icon="home" mode="outlined">
-                {get(user, "address", "")
-                  ? get(user, "address", "")
-                  : "Please add your address"}
+              <Paragraph> Description</Paragraph>
+              <Chip icon="information" mode="outlined">
+                {get(userRestaurant, "description", "")
+                  ? get(userRestaurant, "description", "")
+                  : "Please add description"}
               </Chip>
             </Card.Content>
             <Card.Actions>
@@ -175,9 +206,9 @@ const Profile = ({ navigation }) => {
                 icon="pencil"
                 onPress={() => {
                   handleEdit({
-                    textField: "address",
-                    value: get(user, "address", ""),
-                    label: "address",
+                    textField: "description",
+                    value: get(userRestaurant, "description", ""),
+                    label: "description",
                   });
                 }}
               >
@@ -193,6 +224,7 @@ const Profile = ({ navigation }) => {
           www.aboutreact.com
         </Text> */}
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

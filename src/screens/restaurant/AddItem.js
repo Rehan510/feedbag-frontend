@@ -50,7 +50,7 @@ export default function RegisterScreen({ navigation }) {
     // if (!result.canceled) {
     setImage(result.assets[0]);
 
-    console.log(result.assets);
+    
     // setImage(result);
     // }
   };
@@ -63,9 +63,9 @@ export default function RegisterScreen({ navigation }) {
 
     try {
       let formData = new FormData();
-      console.log("photo \n");
-      console.log(image);
-      console.log(Platform.OS);
+     
+      
+     
       formData.append("picture", {
         name: "itemms",
         type: "image/jpeg",
@@ -78,8 +78,8 @@ export default function RegisterScreen({ navigation }) {
       formData.append("quantity", "item");
       formData.append("description", description.value);
       formData.append("title", title.value);
-      console.log(formData);
-      let jsonValue = await AsyncStorage.getItem("userDetail");
+     
+      let jsonValue = await AsyncStorage.getItem("@userDetail");
       const token = JSON.parse(jsonValue).token;
       let resp = await fetch(`${config.apiUrl}/item/add`, {
         method: "post",
@@ -98,8 +98,8 @@ export default function RegisterScreen({ navigation }) {
       //     },
       //     transformRequest: (d) => formData,
       //   });
-      console.log("ress");
-      console.log(resp);
+    
+     
       Alert.alert("Your item added");
       dispatch(getUserRestaurantWithItems());
       setName({ value: "", error: "" });
@@ -108,7 +108,7 @@ export default function RegisterScreen({ navigation }) {
       setTitle({ value: "", error: "" });
       setPrice({ value: "", error: "" });
     } catch (error) {
-      console.log("rrro");
+   
       Alert.alert("SomeThing went wrong");
       console.log(error);
     }

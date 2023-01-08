@@ -23,8 +23,7 @@ const ItemCards = ({
   deleteItem,
 }) => {
   const cardGap = 16;
-  console.log("items");
-  console.log(data);
+
   const cardWidth = (Dimensions.get("window").width - cardGap * 3) / 2;
   return (
     <SafeAreaView style={{ flex: 1 }}>

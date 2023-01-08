@@ -27,7 +27,6 @@ const Home = ({ navigation }) => {
   };
   useEffect(() => {
     dispatch(getRestaurants());
-    console.log(restaurants);
   }, []);
   return (
     <>

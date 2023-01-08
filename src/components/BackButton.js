@@ -6,7 +6,7 @@ export default function BackButton({ goBack }) {
   return (
     <TouchableOpacity
       onPress={() => {
-        console.log("mmmm");
+      
         goBack();
       }}
       style={styles.container}
