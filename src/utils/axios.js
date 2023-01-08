@@ -5,48 +5,53 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export default {
   initalise: () => {
     axios.defaults.baseURL = config.apiUrl;
-
     // Request Interceptor. All Request pass from here
     console.log("some one hit");
-    const getData = async () => {
+    const token = async () => {
+      console.log("some one call token")
+      let data = null;
       try {
         let jsonValue = await AsyncStorage.getItem("@userDetail");
-        console.log(`*****************************************************
-                     *
-                     *
-                     * 
-                     *           token detail
-                     *            ${jsonValue}
-                     * 
-                     * 
-                     * 
-                     * 
-                     * *****************************************************
-        `);
-       
+        // console.log(`*****************************************************
+        //              *
+        //              *
+        //              *
+        //              *           token detail
+        //              *            ${jsonValue}
+        //              *
+        //              *
+        //              *
+        //              *
+        //              * *****************************************************
+        // `);
+
         if (jsonValue) {
-          axios.interceptors.request.use(
-            (axiosConfig) => {
-             
-           
-              const authToken = JSON.parse(jsonValue).token;
-              if (authToken) {
-                axiosConfig.headers["x-token"] = authToken;
-              }
-              axiosConfig.headers["Content-Type"] = "application/json";
-              return axiosConfig;
-            },
-            (error) => {
-              Promise.reject(error);
-            }
-          );
+          data = JSON.parse(jsonValue).token;
         }
       } catch (e) {
         console.log(e);
         // error reading value
       }
+console.log(" ia m returning data")
+      console.log(data);
+      return data;
     };
-    getData();
+
+    axios.interceptors.request.use(
+      async (axiosConfig) => {
+        const authToken = await token();
+        console.log("inter set");
+        console.log(authToken);
+        if (authToken) {
+          axiosConfig.headers["x-token"] = await authToken;
+        }
+        axiosConfig.headers["Content-Type"] = "application/json";
+        return axiosConfig;
+      },
+      (error) => {
+        Promise.reject(error);
+      }
+    );
 
     /*
 				Response Interceptor

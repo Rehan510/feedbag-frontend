@@ -18,18 +18,18 @@ import {
   Paragraph,
   Chip,
   Text,
+  Checkbox,
 } from "react-native-paper";
 import Header from "../../components/Header";
 import moment from "moment";
 import { get } from "lodash";
 import { useSelector } from "react-redux";
+import { RadioButton } from "react-native-paper";
 const LeftContent = (props) => <Avatar.Icon {...props} icon="folder" />;
-const ViewCart = ({ navigation, preOrders }) => {
+const ViewCart = ({ navigation, preOrders, handleStatus }) => {
   const { order } = useSelector((state) => state.feed);
   const cardGap = 16;
-
-
-
+  const [accountType, setAccountType] = React.useState("pending");
   const getTotal = (items) => {
     let total = 0;
     items.forEach((element) => {
@@ -40,7 +40,7 @@ const ViewCart = ({ navigation, preOrders }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
-        {/* <Header>Orders History</Header> */}
+        <Header>Customer Orders</Header>
         {preOrders.map((dat, index) => {
           return (
             <Card style={{ marginTop: 20 }} key={`his${index}`}>
@@ -52,7 +52,11 @@ const ViewCart = ({ navigation, preOrders }) => {
                   }}
                 >
                   <Title>
-                    <Header>{dat.orderFrom}</Header>
+                    <Header>
+                      {dat.status === "complete"
+                        ? "Order Delivered"
+                        : "New Order"}
+                    </Header>
                   </Title>
                   <Chip mode="outlined">{`Total Rs:${getTotal(
                     dat.orderedItems
@@ -66,44 +70,42 @@ const ViewCart = ({ navigation, preOrders }) => {
                   }}
                 >
                   <Text>{moment(dat.createdAt).format("MMM DD, HH:mm")}</Text>
-                  <Chip icon="information">{`Status:${dat.status}`}</Chip>
+
+                  <Chip
+                    selectedColor={dat.status === "complete" ? "green" : "red"}
+                    mode="flat"
+                    icon={dat.status === "complete" ? "check" : "information"}
+                  >{`${dat.status}`}</Chip>
                 </View>
 
                 {dat.orderedItems.map((d, i) => {
                   return (
                     <View style={styles.row} key={`p${i}`}>
                       <Chip mode="outlined">{d.name}</Chip>
-                      {/* <Text>Don’t have an account? </Text> */}
                     </View>
                   );
-
-                  // <Paragraph>{d.name}</Paragraph>;
                 })}
 
-                {/* <Chip icon="plus">{`Rs:200`}</Chip> */}
+                <Paragraph>contactNo</Paragraph>
+                <Chip icon="phone" mode="outlined">
+                  {get(dat, "contactNo", "")}
+                </Chip>
+                <Paragraph>Delivery Address</Paragraph>
+                <Chip icon="home" mode="outlined">
+                  {get(dat, "deliveryAddress", "")}
+                </Chip>
+                <Paragraph>Delivered</Paragraph>
+                <Checkbox
+                  status={dat.status === "complete" ? "checked" : "unchecked"}
+                  onPress={() => {
+                    handleStatus(dat.id, dat.status);
+                  }}
+                />
               </Card.Content>
-              <Card.Actions>
-                {/* <Button
-                  onPress={() => {}}
-                  icon="minus"
-                  mode="contained"
-                ></Button>
-                <Button mode="outlined">new</Button>
-                <Button
-                  onPress={() => {}}
-                  icon="plus"
-                  mode="contained"
-                ></Button> */}
-              </Card.Actions>
+              <Card.Actions></Card.Actions>
             </Card>
           );
         })}
-
-        {/* <DataTable.Row>
-          <DataTable.Cell>Total Rs</DataTable.Cell>
-          <DataTable.Cell numeric>{totalPrice}</DataTable.Cell>
-          <DataTable.Cell numeric>{totalQuantity}</DataTable.Cell>
-        </DataTable.Row> */}
       </ScrollView>
     </SafeAreaView>
   );

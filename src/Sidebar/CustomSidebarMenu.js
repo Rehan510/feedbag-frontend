@@ -59,7 +59,7 @@ const CustomSidebarMenu = (props) => {
     // dispatch(resetAllRestaurant());
     dispatch(setIsLogin(false));
 
-    // props.navigation.navigate("LoginScreen");
+    props.navigation.navigate("LoginScreen");
   };
   const BASE_PATH =
     "https://raw.githubusercontent.com/AboutReact/sampleresource/master/";

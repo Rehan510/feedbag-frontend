@@ -2,7 +2,7 @@
 // https://aboutreact.com/custom-navigation-drawer-sidebar-with-image-and-icon-in-menu-options/
 
 import React, { useState } from "react";
-import { View, Text, SafeAreaView ,ScrollView} from "react-native";
+import { View, Text, SafeAreaView, ScrollView } from "react-native";
 import { Button, Paragraph, Card, Chip, Title } from "react-native-paper";
 import Header from "../../components/Header";
 import ProfileEditDialog from "../ProfileEditDialog";
@@ -40,8 +40,6 @@ const Profile = ({ navigation }) => {
       payload.description = userData["value"];
     }
 
-   
-   
     try {
       const response = await axios.put(
         `${config.apiUrl}/restaurant/update`,
@@ -63,39 +61,40 @@ const Profile = ({ navigation }) => {
   };
 
   const handleInput = (text) => {
-   
     setData({ ...data, value: text });
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-         <ScrollView>
-      <View style={{ flex: 1, padding: 16 }}>
-        <ProfileEditDialog
-          show={show}
-          data={data}
-          handleInput={handleInput}
-          hideDialog={hideDialog}
-          updateProfile={updateProfile}
-        />
-        <View
-          style={{
-            flex: 1,
-            // alignItems: "center",
-            // justifyContent: "center",
-          }}
-        >
-          <Card>
-            <Card.Cover source={{ uri: get(userRestaurant, "picUrl", null) }} />
+      <ScrollView>
+        <View style={{ flex: 1, padding: 16 }}>
+          <ProfileEditDialog
+            show={show}
+            data={data}
+            handleInput={handleInput}
+            hideDialog={hideDialog}
+            updateProfile={updateProfile}
+          />
+          <View
+            style={{
+              flex: 1,
+              // alignItems: "center",
+              // justifyContent: "center",
+            }}
+          >
+            <Card>
+              <Card.Cover
+                source={{ uri: get(userRestaurant, "picUrl", null) }}
+              />
 
-            <Card.Content>
-              <Title>
-                {/* <Header>{get(userRestaurant, "name", "")}</Header> */}
-              </Title>
-              {/* <Paragraph>{get(userRestaurant, "description", "")}</Paragraph> */}
-            </Card.Content>
-            <Card.Actions>
-              <Chip
+              <Card.Content>
+                <Title>
+                  {/* <Header>{get(userRestaurant, "name", "")}</Header> */}
+                </Title>
+                {/* <Paragraph>{get(userRestaurant, "description", "")}</Paragraph> */}
+              </Card.Content>
+              <Card.Actions>
+                {/* <Chip
                 mode="outlined"
                 icon="pencil"
                 onPress={() => {
@@ -107,123 +106,123 @@ const Profile = ({ navigation }) => {
                 }}
               >
                 Edit
-              </Chip>
-            </Card.Actions>
-          </Card>
-          <Card style={style}>
-            <Card.Content>
-              <Paragraph>Name</Paragraph>
-              <Chip icon="human" mode="outlined">
-                {get(userRestaurant, "name", "")}
-              </Chip>
-            </Card.Content>
-            <Card.Actions>
-              <Chip
-                mode="outlined"
-                icon="pencil"
-                onPress={() => {
-                  handleEdit({
-                    textField: "name",
-                    value: get(userRestaurant, "name", ""),
-                    label: "Name",
-                  });
-                }}
-              >
-                Edit
-              </Chip>
+              </Chip> */}
+              </Card.Actions>
+            </Card>
+            <Card style={style}>
+              <Card.Content>
+                <Paragraph>Name</Paragraph>
+                <Chip icon="human" mode="outlined">
+                  {get(userRestaurant, "name", "")}
+                </Chip>
+              </Card.Content>
+              <Card.Actions>
+                <Chip
+                  mode="outlined"
+                  icon="pencil"
+                  onPress={() => {
+                    handleEdit({
+                      textField: "name",
+                      value: get(userRestaurant, "name", ""),
+                      label: "Name",
+                    });
+                  }}
+                >
+                  Edit
+                </Chip>
 
-              {/* <Button onPress={() => {}} icon="minus" mode="contained">
+                {/* <Button onPress={() => {}} icon="minus" mode="contained">
                 abc
               </Button>
               <Button mode="outlined">abc</Button>
               <Button onPress={() => {}} icon="plus" mode="contained">
                 abc
               </Button> */}
-            </Card.Actions>
-          </Card>
-          <Card style={style}>
-            <Card.Content>
-              <Paragraph>Address</Paragraph>
-              <Chip icon="home" mode="outlined">
-                {get(userRestaurant, "address", "")}
-              </Chip>
-            </Card.Content>
-            <Card.Actions>
-              <Chip
-                mode="outlined"
-                icon="pencil"
-                onPress={() => {
-                  handleEdit({
-                    textField: "address",
-                    value: get(userRestaurant, "address", ""),
-                    label: "Address",
-                  });
-                }}
-              >
-                Edit
-              </Chip>
-            </Card.Actions>
-          </Card>
-          <Card style={style}>
-            <Card.Content>
-              <Paragraph>Contact No</Paragraph>
-              <Chip icon="phone" mode="outlined">
-                {get(userRestaurant, "phoneNo", "")
-                  ? get(userRestaurant, "phoneNo", "")
-                  : "Please add your Contact No"}
-              </Chip>
-            </Card.Content>
-            <Card.Actions>
-              <Chip
-                mode="outlined"
-                icon="pencil"
-                onPress={() => {
-                  handleEdit({
-                    textField: "phoneNo",
-                    value: `${get(userRestaurant, "phoneNo", "")}`,
-                    label: "Contact No",
-                    numeric: true,
-                  });
-                }}
-              >
-                Edit
-              </Chip>
-            </Card.Actions>
-          </Card>
+              </Card.Actions>
+            </Card>
+            <Card style={style}>
+              <Card.Content>
+                <Paragraph>Address</Paragraph>
+                <Chip icon="home" mode="outlined">
+                  {get(userRestaurant, "address", "")}
+                </Chip>
+              </Card.Content>
+              <Card.Actions>
+                <Chip
+                  mode="outlined"
+                  icon="pencil"
+                  onPress={() => {
+                    handleEdit({
+                      textField: "address",
+                      value: get(userRestaurant, "address", ""),
+                      label: "Address",
+                    });
+                  }}
+                >
+                  Edit
+                </Chip>
+              </Card.Actions>
+            </Card>
+            <Card style={style}>
+              <Card.Content>
+                <Paragraph>Contact No</Paragraph>
+                <Chip icon="phone" mode="outlined">
+                  {get(userRestaurant, "phoneNo", "")
+                    ? get(userRestaurant, "phoneNo", "")
+                    : "Please add your Contact No"}
+                </Chip>
+              </Card.Content>
+              <Card.Actions>
+                <Chip
+                  mode="outlined"
+                  icon="pencil"
+                  onPress={() => {
+                    handleEdit({
+                      textField: "phoneNo",
+                      value: `${get(userRestaurant, "phoneNo", "")}`,
+                      label: "Contact No",
+                      numeric: true,
+                    });
+                  }}
+                >
+                  Edit
+                </Chip>
+              </Card.Actions>
+            </Card>
 
-          <Card style={style}>
-            <Card.Content>
-              <Paragraph> Description</Paragraph>
-              <Chip icon="information" mode="outlined">
-                {get(userRestaurant, "description", "")
-                  ? get(userRestaurant, "description", "")
-                  : "Please add description"}
-              </Chip>
-            </Card.Content>
-            <Card.Actions>
-              <Chip
-                mode="outlined"
-                icon="pencil"
-                onPress={() => {
-                  handleEdit({
-                    textField: "description",
-                    value: get(userRestaurant, "description", ""),
-                    label: "description",
-                  });
-                }}
-              >
-                Edit
-              </Chip>
-            </Card.Actions>
-          </Card>
-        </View>
-        {/* <Text style={{ fontSize: 18, textAlign: 'center', color: 'grey' }}>
+            <Card style={style}>
+              <Card.Content>
+                <Paragraph> Description</Paragraph>
+                <Chip icon="information" mode="outlined">
+                  {get(userRestaurant, "description", "")
+                    ? get(userRestaurant, "description", "")
+                    : "Please add description"}
+                </Chip>
+              </Card.Content>
+              <Card.Actions>
+                <Chip
+                  mode="outlined"
+                  icon="pencil"
+                  onPress={() => {
+                    handleEdit({
+                      textField: "description",
+                      value: get(userRestaurant, "description", ""),
+                      label: "description",
+                    });
+                  }}
+                >
+                  Edit
+                </Chip>
+              </Card.Actions>
+            </Card>
+          </View>
+          {/* <Text style={{ fontSize: 18, textAlign: 'center', color: 'grey' }}>
           Custom React Navigate Drawer
         </Text>
         <Text style={{ fontSize: 16, textAlign: 'center', color: 'grey' }}>
           www.aboutreact.com
         </Text> */}
-      </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

@@ -21,7 +21,6 @@ import { Provider } from "react-native-paper";
 import PlaceOrder from "./src/screens/customer/PlaceOrder";
 import ViewCart from "./src/screens/customer/ViewCart";
 import AddItem from "./src/screens/restaurant/AddItem";
-import AxiosInterceptor from "./src/utils/axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { setUser } from "./src/reducers/feed";
 import { useDispatch } from "react-redux";
@@ -44,9 +43,14 @@ const Navigation = (props) => {
   useEffect(() => {
     token();
     console.log("nws");
+    console.log(login, "login staus", isLogin);
   }, [token, isLogin]);
-  console.log(login, "login staus", isLogin);
-
+ 
+  // console.log(login, "login staus", isLogin);
+  if (login) {
+    console.log("SiderbarHome")
+    
+  }
   return (
     <Provider theme={theme}>
       <Stack.Navigator

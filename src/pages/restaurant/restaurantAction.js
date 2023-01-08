@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setUserRestaurant } from "../../reducers/restaurant";
+import { setUserRestaurant, setIsRestaurant } from "../../reducers/restaurant";
 import config from "../../config/config";
 import axios from "axios";
 import { get } from "lodash";
@@ -9,7 +9,7 @@ export const getUserRestaurantWithItems = () => {
     try {
       const response = await axios.get(`${config.apiUrl}/restaurant/get/owner`);
       let restaurantsData = get(response, "data.data", {});
-     
+
       if (restaurantsData) {
         dispatch(setUserRestaurant(restaurantsData));
       } else {
@@ -20,5 +20,6 @@ export const getUserRestaurantWithItems = () => {
 
       console.log(error);
     }
+    dispatch(setIsRestaurant(true));
   };
 };
